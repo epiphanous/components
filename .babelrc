@@ -1,8 +1,7 @@
 {
   "presets": [
-    "env",
-    "stage-0",
-    "react"
+    "@babel/env",
+    "@babel/react"
   ],
   env: {
     emotion: {
@@ -11,7 +10,7 @@
           'transform-rename-import',
           {
             original: 'styled-components',
-            replacement: 'react-emotion'
+            replacement: '@emotion/styled'
           }
         ]
       ]

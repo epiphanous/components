@@ -1,6 +1,8 @@
 import React from 'react'
-import { styles, util } from 'styled-system'
+import * as styles from 'styled-system'
 import styled from 'styled-components'
+
+const get = styles.get
 
 const css = props => props.css
 
@@ -18,7 +20,7 @@ const styleKeys = Object.keys(styles)
 
 const propNames = styleKeys
   .reduce((a, key) => {
-    const names = Object.keys(styles[key].propTypes)
+    const names = Object.keys(styles[key].propTypes || {})
     return [ ...a, ...names ]
   }, [])
 
@@ -26,6 +28,7 @@ const propNames = styleKeys
 const _blacklist = [
   'css',
   'is',
+  'as',
   'tag',
   'extend',
   ...propNames
@@ -35,7 +38,7 @@ const tag = React.forwardRef(({
   blacklist = [],
   ...props
 }, ref) => {
-  const Base = props.extend || props.tag || props.is || 'div'
+  const Base = props.extend || props.tag || props.is || props.as || 'div'
   const next = omit(props, typeof Base === 'string' ? [
     ..._blacklist,
     ...blacklist
@@ -56,7 +59,7 @@ const system = (props = {}, ...keysOrStyles) => {
 
   const Component = styled(tag)([], ...funcs, css)
 
-  const baseProps = util.get(props, 'extend.defaultProps') || {}
+  const baseProps = get(props, 'extend.defaultProps') || {}
 
   Component.defaultProps = {
     ...baseProps,

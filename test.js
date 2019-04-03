@@ -1,5 +1,5 @@
 import 'jest-styled-components'
-import styled, { css as scCSS, isStyledComponent } from 'styled-components'
+import styled, { css as scCSS } from 'styled-components'
 import { space, color } from 'styled-system'
 import React from 'react'
 import { create as render } from 'react-test-renderer'
@@ -16,9 +16,9 @@ describe('@rebass/components', () => {
 
   test('returns a styled-component', () => {
     const Box = system()
-    expect(typeof Box).toBe('function')
-    expect(typeof Box.styledComponentId).toBe('string')
-    expect(isStyledComponent(Box)).toBe(true)
+    expect(typeof Box == 'function' || typeof Box == 'object').toBe(true)
+    expect(Box.hasOwnProperty('styledComponentId') || Box.hasOwnProperty('__emotion_base')).toBe(true)
+//  expect(typeof Box.styledComponentId).toBe('string')
   })
 
   test('Adds defaultProps', () => {
